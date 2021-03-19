@@ -37,7 +37,16 @@ export default class Calculator extends Component {
 
             const values = [...this.state.values]
             try{
-                values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)
+                const operations = {
+                    '+': (a,b) => a + b,
+                    '-': (a,b) => a - b,
+                    '*': (a,b) => a * b,
+                    '/': (a,b) => a / b,
+                    }
+                    
+                    // o eval sai e fica desse jeito:
+                    values[0] = values.reduce(operations[currentOperation])
+                // values[0] = eval(`${values[0]} ${currentOperation} ${values[1]}`)
             } catch (e) {
                 values[0] = this.state.values[0]   
             }
@@ -66,7 +75,7 @@ export default class Calculator extends Component {
         const displayValue = currentValue + n
         this.setState({displayValue, clearDisplay: false})
 
-        if(n!= '.'){
+        if(n!== '.'){
             const i = this.state.current
             const newValue = parseFloat(displayValue)
             const values = [...this.state.values]
